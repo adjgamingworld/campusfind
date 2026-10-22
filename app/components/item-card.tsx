@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BookOpen,
   Headphones,
@@ -5,7 +7,9 @@ import {
   Smartphone,
   type LucideIcon,
 } from "lucide-react";
+import Link from "next/link";
 import type { CampusItem } from "../lib/items";
+import { useItemStatuses } from "./item-status-provider";
 
 const categoryIcons: Record<CampusItem["category"], LucideIcon> = {
   Accessories: Headphones,
@@ -19,30 +23,38 @@ type ItemCardProps = {
 };
 
 export function ItemCard({ item }: ItemCardProps) {
-  const Icon = categoryIcons[item.category];
+  const { getItem } = useItemStatuses();
+  const currentItem = getItem(item.id) ?? item;
+  const Icon = categoryIcons[currentItem.category];
 
   return (
-    <article className="item-card">
-      <div className={`item-art item-art-${item.art}`}>
-        <span className={`status-pill status-${item.status.toLowerCase()}`}>
-          <span aria-hidden="true" />
-          {item.status}
-        </span>
-        <div className="item-art-icon" aria-hidden="true">
-          <Icon size={43} strokeWidth={1.45} />
+    <Link
+      className="item-card-link"
+      href={`/items/${currentItem.id}`}
+      aria-label={`View details for ${currentItem.name}`}
+    >
+      <article className="item-card">
+        <div className={`item-art item-art-${currentItem.art}`}>
+          <span className={`status-pill status-${currentItem.status.toLowerCase()}`}>
+            <span aria-hidden="true" />
+            {currentItem.status}
+          </span>
+          <div className="item-art-icon" aria-hidden="true">
+            <Icon size={43} strokeWidth={1.45} />
+          </div>
+          <span className="item-art-category">{currentItem.category}</span>
         </div>
-        <span className="item-art-category">{item.category}</span>
-      </div>
-      <div className="item-card-content">
-        <div className="item-card-heading">
-          <h3>{item.name}</h3>
-          <span>{item.reportedAt}</span>
+        <div className="item-card-content">
+          <div className="item-card-heading">
+            <h3>{currentItem.name}</h3>
+            <span>{currentItem.reportedAt}</span>
+          </div>
+          <p className="item-location">
+            <span className="location-icon" aria-hidden="true" />
+            {currentItem.location}
+          </p>
         </div>
-        <p className="item-location">
-          <span className="location-icon" aria-hidden="true" />
-          {item.location}
-        </p>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }
