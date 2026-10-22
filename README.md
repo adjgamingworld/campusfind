@@ -37,7 +37,9 @@ npm run build
 - `app/page.tsx` composes the homepage and shared page sections.
 - `app/components/site-header.tsx` contains the shared site navigation.
 - `app/components/item-card.tsx` renders a sample item report.
+- `app/components/item-listing.tsx` provides client-side item search and filters.
 - `app/lib/items.ts` contains the item types and local mock data.
+- `app/lib/filter-items.ts` contains the reusable search and filtering logic.
 - `app/globals.css` contains the responsive design and global styles.
 
 Keep sample data separate from UI components. As the project grows, add new
@@ -50,12 +52,10 @@ CampusFind is designed as a small team project with approachable, independent
 pull requests. Start by checking the repository's GitHub Issues for an open
 task, or open an issue to discuss a change before starting larger work.
 
-Suggested first features (not implemented in this scaffold):
+Suggested features for contributors:
 
-1. Build a browse-items experience around the reusable item card.
-2. Add search and category filters to the browse experience.
-3. Create a lost/found report form with accessible validation.
-4. Add item details and a claim/return status flow.
+1. Create a lost/found report form with accessible validation.
+2. Add item details and a claim/return status flow.
 
 For a contribution:
 
