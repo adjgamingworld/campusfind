@@ -101,13 +101,13 @@ export default function Home() {
           <div className="section-heading">
             <div>
               <p className="eyebrow eyebrow-muted">A helping hand starts here</p>
-              <h2>Recent campus finds</h2>
+              <h2>Browse lost & found items</h2>
               <p className="section-description">
-                A few things recently reported by students around campus.
+                Browse all {items.length} sample reports from around campus.
               </p>
             </div>
             <a className="section-link" href="#contribute">
-              Help build the browse page
+              Explore the project
               <ArrowRight aria-hidden="true" size={16} />
             </a>
           </div>
@@ -131,9 +131,7 @@ export default function Home() {
               <p className="eyebrow eyebrow-light">Built together, for campus</p>
               <h2>There’s room for your next good idea.</h2>
               <p>
-                CampusFind is an open-source student project. The full browse
-                experience, search, report form, and item details are upcoming
-                features for contributors to build.
+                CampusFind is an open-source student project. Search, report submission, and item details are upcoming features for contributors to build.
               </p>
             </div>
             <a
