@@ -15,7 +15,7 @@ export function SiteHeader() {
 
         <nav className="main-nav" aria-label="Main navigation">
           <a href="#recent-reports">Browse items</a>
-          <a className="nav-report" href="#contribute">
+          <a className="nav-report" href="#report-item">
             Report an item
             <ArrowUpRight aria-hidden="true" size={15} />
           </a>

@@ -42,6 +42,7 @@ export function ItemCard({ item }: ItemCardProps) {
           <span className="location-icon" aria-hidden="true" />
           {item.location}
         </p>
+        {item.description && <p className="item-description">{item.description}</p>}
       </div>
     </article>
   );

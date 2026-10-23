@@ -11,6 +11,7 @@ export type CampusItem = {
   name: string;
   category: ItemCategory;
   location: string;
+  description?: string;
   reportedAt: string;
   status: ItemStatus;
   art: "blue" | "peach" | "lilac" | "yellow";

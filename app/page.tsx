@@ -7,7 +7,7 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
-import { ItemCard } from "./components/item-card";
+import { ReportExperience } from "./components/report-experience";
 import { SiteHeader } from "./components/site-header";
 import { items } from "./lib/items";
 
@@ -106,20 +106,13 @@ export default function Home() {
                 A few things recently reported by students around campus.
               </p>
             </div>
-            <a className="section-link" href="#contribute">
-              Help build the browse page
+            <a className="section-link" href="#report-item">
+              Report an item
               <ArrowRight aria-hidden="true" size={16} />
             </a>
           </div>
 
-          <div className="item-grid">
-            {items.map((item) => (
-              <ItemCard item={item} key={item.id} />
-            ))}
-          </div>
-          <p className="mock-data-note">
-            These are sample reports — no real items or students are shown.
-          </p>
+          <ReportExperience />
         </section>
 
         <section className="community-section" id="contribute">
@@ -131,9 +124,8 @@ export default function Home() {
               <p className="eyebrow eyebrow-light">Built together, for campus</p>
               <h2>There’s room for your next good idea.</h2>
               <p>
-                CampusFind is an open-source student project. The full browse
-                experience, search, report form, and item details are upcoming
-                features for contributors to build.
+                CampusFind is an open-source student project. Lost and found
+                reports are saved in this browser until a shared backend is added.
               </p>
             </div>
             <a
