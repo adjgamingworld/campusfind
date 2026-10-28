@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -7,12 +8,16 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
+import { io } from "next/cache";
 import { ItemListing } from "./components/item-listing";
 import { ReportExperience } from "./components/report-experience";
 import { SiteHeader } from "./components/site-header";
-import { items } from "./lib/items";
+import { getItems } from "./lib/database";
+import { sampleItems } from "./lib/items";
 
 export default function Home() {
+  const featuredItem = sampleItems[0];
+
   return (
     <>
       <SiteHeader />
@@ -58,7 +63,7 @@ export default function Home() {
             <div
               className="hero-art"
               role="img"
-              aria-label={`Sample ${items[0].status.toLowerCase()} item report: ${items[0].name} at ${items[0].location}`}
+              aria-label={`Sample ${featuredItem.status.toLowerCase()} item report: ${featuredItem.name} at ${featuredItem.location}`}
             >
               <div className="art-sun" />
               <div className="art-orbit art-orbit-one" />
@@ -74,14 +79,14 @@ export default function Home() {
                 </div>
                 <div className="report-content">
                   <span
-                    className={`status-pill status-${items[0].status.toLowerCase()}`}
+                    className={`status-pill status-${featuredItem.status.toLowerCase()}`}
                   >
-                    {items[0].status}
+                    {featuredItem.status}
                   </span>
-                  <h2>{items[0].name}</h2>
+                  <h2>{featuredItem.name}</h2>
                   <p>
                     <MapPin aria-hidden="true" size={13} />
-                    {items[0].location}
+                    {featuredItem.location}
                   </p>
                 </div>
                 <div className="report-sparkle" aria-hidden="true">
@@ -99,34 +104,15 @@ export default function Home() {
         </section>
 
         <section className="reports-section page-shell" id="recent-reports">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow eyebrow-muted">A helping hand starts here</p>
-              <h2>Browse lost & found items</h2>
-              <p className="section-description">
-                Browse all {items.length} sample reports from around campus.
+          <Suspense
+            fallback={
+              <p className="section-description" role="status">
+                Loading campus reports...
               </p>
-            </div>
-            <a className="section-link" href="#contribute">
-              Explore the project
-              <h2>Recent campus reports</h2>
-              <p className="section-description">
-                Search and filter items reported by students around campus.
-              </p>
-            </div>
-            <a className="section-link" href="#contribute">
-              Help shape what’s next
-            <a className="section-link" href="#report-item">
-              Report an item
-              <ArrowRight aria-hidden="true" size={16} />
-            </a>
-          </div>
-
-          <ItemListing items={items} />
-          <p className="mock-data-note">
-            These are sample reports — no real items or students are shown.
-          </p>
-          <ReportExperience />
+            }
+          >
+            <RecentReports />
+          </Suspense>
         </section>
 
         <section className="community-section" id="contribute">
@@ -139,8 +125,8 @@ export default function Home() {
               <h2>There’s room for your next good idea.</h2>
               <p>
                 CampusFind is an open-source student project. Browse, search,
-                and category filters are ready to use; the report form and item
-                details are open for contributors to build.
+                filter, and report items, with reports and status updates saved
+                in the local SQLite database.
               </p>
             </div>
             <a
@@ -167,6 +153,35 @@ export default function Home() {
           Open source, made on campus
         </a>
       </footer>
+    </>
+  );
+}
+
+async function RecentReports() {
+  await io();
+  const items = getItems();
+
+  return (
+    <>
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow eyebrow-muted">A helping hand starts here</p>
+          <h2>Recent campus reports</h2>
+          <p className="section-description">
+            Search and filter {items.length} reports from around campus.
+          </p>
+        </div>
+        <a className="section-link" href="#report-item">
+          Report an item
+          <ArrowRight aria-hidden="true" size={16} />
+        </a>
+      </div>
+
+      <ItemListing items={items} />
+      <p className="mock-data-note">
+        Sample reports are included; new reports are saved in the local SQLite database.
+      </p>
+      <ReportExperience />
     </>
   );
 }

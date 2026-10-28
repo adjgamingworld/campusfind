@@ -9,16 +9,20 @@ export type ItemCategory =
 export type CampusItem = {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   category: ItemCategory;
   location: string;
-  description?: string;
   reportedAt: string;
   status: ItemStatus;
   art: "blue" | "peach" | "lilac" | "yellow";
 };
 
-export const items: CampusItem[] = [
+export type ReportActionState = {
+  error: string | null;
+  success: string | null;
+};
+
+export const sampleItems: CampusItem[] = [
   {
     id: "wireless-earbuds",
     name: "Wireless earbuds",
@@ -64,7 +68,3 @@ export const items: CampusItem[] = [
     art: "yellow",
   },
 ];
-
-export function getItemById(id: string) {
-  return items.find((item) => item.id === id);
-}

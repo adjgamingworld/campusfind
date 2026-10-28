@@ -1,5 +1,3 @@
-"use client";
-
 import {
   BookOpen,
   Headphones,
@@ -9,7 +7,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { CampusItem } from "../lib/items";
-import { useItemStatuses } from "./item-status-provider";
 
 const categoryIcons: Record<CampusItem["category"], LucideIcon> = {
   Accessories: Headphones,
@@ -23,8 +20,7 @@ type ItemCardProps = {
 };
 
 export function ItemCard({ item }: ItemCardProps) {
-  const { getItem } = useItemStatuses();
-  const currentItem = getItem(item.id) ?? item;
+  const currentItem = item;
   const Icon = categoryIcons[currentItem.category];
 
   return (
@@ -53,15 +49,11 @@ export function ItemCard({ item }: ItemCardProps) {
             <span className="location-icon" aria-hidden="true" />
             {currentItem.location}
           </p>
+          {currentItem.description && (
+            <p className="item-description">{currentItem.description}</p>
+          )}
         </div>
       </article>
     </Link>
-        <p className="item-location">
-          <span className="location-icon" aria-hidden="true" />
-          {item.location}
-        </p>
-        {item.description && <p className="item-description">{item.description}</p>}
-      </div>
-    </article>
   );
 }

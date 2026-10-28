@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ItemStatusProvider } from "./components/item-status-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,9 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body>
-        <ItemStatusProvider>{children}</ItemStatusProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

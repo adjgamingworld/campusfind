@@ -1,17 +1,15 @@
-"use client";
-
 import { ArrowLeft, CheckCircle2, MapPin } from "lucide-react";
 import Link from "next/link";
 import type { CampusItem } from "../lib/items";
-import { useItemStatuses } from "./item-status-provider";
+import { resolveItem } from "../actions";
 
 export function ItemDetails({ item }: { item: CampusItem }) {
-  const { getItem, resolveItem } = useItemStatuses();
-  const currentItem = getItem(item.id) ?? item;
+  const currentItem = item;
   const canResolve =
     currentItem.status === "Found" || currentItem.status === "Lost";
   const actionLabel =
     currentItem.status === "Found" ? "Mark as claimed" : "Mark as returned";
+  const resolveCurrentItem = resolveItem.bind(null, currentItem.id);
 
   return (
     <main className="details-page page-shell">
@@ -38,11 +36,13 @@ export function ItemDetails({ item }: { item: CampusItem }) {
             <div><dt>Current status</dt><dd>{currentItem.status}</dd></div>
           </dl>
           {canResolve ? (
-            <button className="button button-primary status-action" onClick={() => resolveItem(currentItem.id)} type="button"><CheckCircle2 aria-hidden="true" size={17} />{actionLabel}</button>
+            <form action={resolveCurrentItem}>
+              <button className="button button-primary status-action" type="submit"><CheckCircle2 aria-hidden="true" size={17} />{actionLabel}</button>
+            </form>
           ) : (
             <p className="status-confirmation" role="status"><CheckCircle2 aria-hidden="true" size={18} />This item has already been {currentItem.status.toLowerCase()}.</p>
           )}
-          <p className="demo-persistence-note">Demo status changes are saved only in this browser; they are not stored on a server.</p>
+          <p className="demo-persistence-note">Status changes are saved in the local SQLite database.</p>
         </div>
       </article>
     </main>
